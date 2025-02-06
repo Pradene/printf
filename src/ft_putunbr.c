@@ -25,7 +25,7 @@ static int	power(int n, int pow)
 	return (nb);
 }
 
-static int	len(unsigned int n)
+static int	uint_len(unsigned int n)
 {
 	int	size;
 
@@ -46,9 +46,7 @@ int	ft_putunbr(unsigned int n)
 
 	if (n == 0)
 		return (ft_putchar('0'));
-	if (n < 0)
-		n = 4294967295 - n + 1;
-	size = len(n);
+	size = uint_len(n);
 	i = size - 1;
 	while (i >= 0)
 	{

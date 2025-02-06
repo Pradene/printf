@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	count_char(unsigned int n)
+static int	hex_len(unsigned int n)
 {
 	int	size;
 
@@ -27,14 +27,12 @@ static int	count_char(unsigned int n)
 	return (size);
 }
 
-int	ft_puthex(unsigned int n, int format)
+int	ft_puthex(unsigned long long n)
 {
 	int		c;
 	char	*s;
 
-	if (n < 0)
-		n = 4294967295 - n + 1;
-	c = count_char(n);
+	c = hex_len(n);
 	s = malloc(sizeof(char) * (c + 1));
 	if (!s)
 		return (0);
@@ -47,7 +45,7 @@ int	ft_puthex(unsigned int n, int format)
 		if (n % 16 < 10)
 			s[c] = n % 16 + '0';
 		else
-			s[c] = n % 16 - 10 + format;
+			s[c] = n % 16 - 10 + 'A';
 		n /= 16;
 	}
 	c = ft_putstr(s);

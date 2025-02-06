@@ -28,7 +28,7 @@ int	ft_putformated(va_list params, char c)
 	else if (c == 'u')
 		size += ft_putunbr(va_arg(params, unsigned int));
 	else if (c == 'x' || c == 'X')
-		size += ft_puthex(va_arg(params, unsigned int), c - 23);
+		size += ft_puthex((unsigned long long)va_arg(params, unsigned int));
 	else if (c == '%')
 		size += ft_putchar('%');
 	return (size);

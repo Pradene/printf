@@ -23,7 +23,7 @@ int	ft_putformated(va_list params, char c);
 int	ft_putstr(char *s);
 int	ft_putchar(char c);
 
-int	ft_puthex(unsigned int n, int format);
+int	ft_puthex(unsigned long long n);
 
 int	ft_putnbr(int n);
 

@@ -10,6 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Directories
+SRC_DIR = src
+OBJ_DIR = obj
+
 SRCS	= ft_printf.c \
 		ft_puthex.c \
 		ft_putnbr.c \
@@ -17,27 +21,40 @@ SRCS	= ft_printf.c \
 		ft_putstr.c \
 		ft_putptr.c
 
-OBJS	= ${SRCS:.c=.o}
+# Paths
+SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
+OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
-CC	= cc
+# Compiler settings
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 
-FLAGS	= -Wall -Wextra -Werror
+# Library name
+NAME = libftprintf.a
 
-NAME	= libftprintf.a
+all: $(NAME)
 
-${NAME}:
-	${CC} ${FLAGS} ${SRCS} -c
-	ar rc ${NAME} ${OBJS}
-	ranlib ${NAME}
+# Rule for building the library
+$(NAME): $(OBJS)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
-all: ${NAME}
+all: $(NAME)
+
+# Ensure obj directory exists
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+# Compilation rule for object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f ${OBJS}
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -f ${NAME}
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: re fclean clean all
+.PHONY: all clean fclean

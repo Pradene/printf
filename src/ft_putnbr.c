@@ -19,7 +19,7 @@ static int	absolute(int n)
 	return (n);
 }
 
-static int	count(int n)
+static int	int_len(int n)
 {
 	int	c;
 
@@ -39,7 +39,7 @@ static char	*ft_itoa(int n)
 	int		c;
 	char	*str;
 
-	c = count(n);
+	c = int_len(n);
 	str = malloc(sizeof(char) * (c + 1));
 	if (!str)
 		return (0);

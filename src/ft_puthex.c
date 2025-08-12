@@ -12,43 +12,24 @@
 
 #include "ft_printf.h"
 
-static int	hex_len(unsigned int n)
-{
-	int	size;
+int	ft_puthex(unsigned long long n) {
+	char	buf[17];
+	int		i;
 
-	size = 0;
-	if (n == 0)
-		size++;
-	while (n)
-	{
-		n /= 16;
-		size++;
+	buf[16] = '\0';
+	i = 16;
+	if (n == 0) {
+		buf[--i] = '0';
 	}
-	return (size);
-}
-
-int	ft_puthex(unsigned long long n)
-{
-	int		c;
-	char	*s;
-
-	c = hex_len(n);
-	s = malloc(sizeof(char) * (c + 1));
-	if (!s)
-		return (0);
-	if (n == 0)
-		s[0] = '0';
-	s[c] = '\0';
-	while (n && c)
-	{
-		c--;
-		if (n % 16 < 10)
-			s[c] = n % 16 + '0';
-		else
-			s[c] = n % 16 - 10 + 'A';
+	while (n) {
+		unsigned digit = n % 16;
+		if (digit < 10) {
+			buf[--i] = digit + '0';
+		} else {
+			buf[--i] = digit - 10 + 'A';
+		}
 		n /= 16;
 	}
-	c = ft_putstr(s);
-	free(s);
-	return (c);
+	return (ft_putstr(&buf[i]));
 }
+

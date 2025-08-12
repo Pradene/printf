@@ -12,58 +12,29 @@
 
 #include "ft_printf.h"
 
-static int	absolute(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
+int	ft_putnbr(int n) {
+	char					buf[12];
+	int						i;
+	unsigned int	num;
 
-static int	int_len(int n)
-{
-	int	c;
-
-	c = 0;
-	if (n <= 0)
-		c++;
-	while (n)
-	{
-		n /= 10;
-		c++;
+	i = 11;
+	buf[i] = '\0';
+	if (n == 0) {
+		buf[--i] = '0';
+	} else {
+		if (n < 0) {
+			num = (unsigned int)(-n);
+		} else {
+			num = (unsigned int)n;
+		}
+		while (num) {
+			buf[--i] = (num % 10) + '0';
+			num /= 10;
+		}
+		if (n < 0) {
+			buf[--i] = '-';
+		}
 	}
-	return (c);
+	return (ft_putstr(&buf[i]));
 }
 
-static char	*ft_itoa(int n)
-{
-	int		c;
-	char	*str;
-
-	c = int_len(n);
-	str = malloc(sizeof(char) * (c + 1));
-	if (!str)
-		return (0);
-	if (n < 0)
-		*str = '-';
-	if (n == 0)
-		*str = '0';
-	str[c] = '\0';
-	while (n)
-	{
-		c--;
-		str[c] = absolute(n % 10) + 48;
-		n /= 10;
-	}
-	return (str);
-}
-
-int	ft_putnbr(int n)
-{
-	char	*s;
-	int		size;
-
-	s = ft_itoa(n);
-	size = ft_putstr(s);
-	free(s);
-	return (size);
-}
